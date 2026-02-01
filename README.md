@@ -57,6 +57,7 @@ graph TD
 ```
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo2.gif)
+*write a color picker for picking a random color for background
 
 ## Workflow
 
@@ -68,6 +69,7 @@ graph TD
 6. **Status Update**: Status bar item updates based on connection state
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo3.gif)
+*make a flappy bird game on the air
 
 ## Development
 
@@ -76,10 +78,15 @@ graph TD
 3. Press F5 to launch the Extension Development Host
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo4.gif)
+*create a star war game on the go
 
 ## Commands
 
 - `OpenClaw: Show Menu` - Show the OpenClaw menu with command options
+
+
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo5.gif)
+*code a tic tac toe game (allows two players or playing against an AI)
 
 ## License
 MIT
