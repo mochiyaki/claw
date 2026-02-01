@@ -2,7 +2,7 @@
   "name": "openclaw",
   "displayName": "openclaw",
   "description": "OpenClaw connection status manager",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "publisher": "gguf",
   "author": {
     "name": "gguf",

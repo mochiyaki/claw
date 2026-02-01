@@ -3,6 +3,10 @@
 All notable changes to the "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.0.7
+  - more examples included
+- 0.0.6
+  - terminal ui button added
 - 0.0.5
   - demo added
 - 0.0.4
