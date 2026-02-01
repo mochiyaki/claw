@@ -2,7 +2,7 @@
 
 A simple VS Code extension that manages OpenClaw connection status via a status bar item.
 
-![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/claw.gif)
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Features
 
