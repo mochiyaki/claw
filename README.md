@@ -75,6 +75,8 @@ graph TD
 2. Compile: `npm run compile`
 3. Press F5 to launch the Extension Development Host
 
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo4.gif)
+
 ## Commands
 
 - `OpenClaw: Show Menu` - Show the OpenClaw menu with command options
