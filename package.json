@@ -1,29 +1,28 @@
 {
-  "name": "openclaw",
-  "displayName": "openclaw",
-  "description": "OpenClaw connection status manager",
-  "version": "0.0.7",
+  "name": "claw",
+  "displayName": "claw",
+  "description": "Claw connection status manager",
+  "version": "0.0.9",
   "publisher": "gguf",
   "author": {
     "name": "gguf",
     "email": "info@gguf.us"
   },
   "license": "MIT",
-  "homepage": "https://github.com/mochiyaki/openclaw",
+  "homepage": "https://github.com/mochiyaki/clawdbot",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mochiyaki/openclaw.git"
+    "url": "https://github.com/mochiyaki/clawdbot.git"
   },
   "icon": "assets/images/icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },
   "categories": [
-    "Machine Learning",
-		"Other"
+    "Machine Learning"
   ],
   "keywords": [
-		"openclaw"
+    "gguf"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -32,17 +31,17 @@
   "contributes": {
     "commands": [
       {
-        "command": "openclaw.showMenu",
-        "title": "OpenClaw: Show Menu"
+        "command": "claw.showMenu",
+        "title": "Claw: Show Menu"
       }
     ],
     "configuration": {
-      "title": "OpenClaw",
+      "title": "Claw",
       "properties": {
-        "openclaw.autoConnect": {
+        "claw.autoConnect": {
           "type": "boolean",
           "default": false,
-          "description": "Automatically connect to OpenClaw on startup"
+          "description": "Automatically connect to Claw on startup"
         }
       }
     }

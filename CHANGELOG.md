@@ -1,19 +1,23 @@
 # Change Log
 
-All notable changes to the "openclaw" extension will be documented in this file.
+All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.0.9
+  - minor adjustment
+- 0.0.8
+  - re-name to claw
 - 0.0.7
   - more examples included
 - 0.0.6
   - terminal ui button added
 - 0.0.5
-  - demo added
+  - demo and docs updated
 - 0.0.4
-  - key refinement
+  - re-structure as a menu selection scheme
 - 0.0.3
-  - docs and specs revised
+  - CLI icon updated
 - 0.0.2
-  - catch up the claw extension in this update
+  - ensure the wsl is selected for windows; bug fixed
 - 0.0.1
   - initial release

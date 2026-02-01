@@ -5,20 +5,21 @@ let statusBarItem: vscode.StatusBarItem;
 let terminal: vscode.Terminal | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
-    console.log('OpenClaw extension is now active');
+    console.log('Claw extension is now active');
 
     // Create status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.command = 'openclaw.showMenu';
-    statusBarItem.text = '$(hubot) OpenClaw';
-    statusBarItem.tooltip = 'Click to show OpenClaw menu';
+    statusBarItem.command = 'claw.showMenu';
+    // statusBarItem.text = '$(plug) Claw';
+    statusBarItem.text = '$(hubot) Claw';
+    statusBarItem.tooltip = 'Click to show Claw menu';
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
 
     // Register menu command
-    let menuCommand = vscode.commands.registerCommand('openclaw.showMenu', async () => {
+    let menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
-            "Connect to OpenClaw? Make sure your openclaw is ready.",
+            "Connect to Claw? Make sure your claw is ready.",
             "Status",
             "Onboard",
             "Gateway",
@@ -28,28 +29,28 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (selection) {
             const commandMap: { [key: string]: string } = {
-                'Status': 'openclaw status',
-                'Onboard': 'openclaw onboard',
-                'Gateway': 'openclaw gateway',
-                'Terminal': 'openclaw tui',
-                'Dashboard': 'openclaw dashboard'
+                'Status': 'claw status',
+                'Onboard': 'claw onboard',
+                'Gateway': 'claw gateway',
+                'Terminal': 'claw tui',
+                'Dashboard': 'claw dashboard'
             };
             const command = commandMap[selection];
             if (command) {
-                await runOpenClawCommand(context, command);
+                await runClawCommand(context, command);
             }
         }
     });
     context.subscriptions.push(menuCommand);
 
     // Check auto-connect setting
-    const config = vscode.workspace.getConfiguration('openclaw');
+    const config = vscode.workspace.getConfiguration('claw');
     const autoConnect = config.get<boolean>('autoConnect', false);
 
     if (autoConnect) {
         // Auto-connect on startup (runs status)
         setTimeout(() => {
-            runOpenClawCommand(context, 'openclaw status');
+            runClawCommand(context, 'claw status');
         }, 1000); // Small delay to ensure everything is initialized
     }
 
@@ -57,15 +58,16 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidCloseTerminal((closedTerminal) => {
         if (terminal && closedTerminal === terminal) {
             terminal = undefined;
-            statusBarItem.text = '$(hubot) OpenClaw';
-            statusBarItem.tooltip = 'Click to show OpenClaw menu';
+            // statusBarItem.text = '$(plug) Claw';
+            statusBarItem.text = '$(hubot) Claw';
+            statusBarItem.tooltip = 'Click to show Claw menu';
         }
     });
 }
 
-async function runOpenClawCommand(context: vscode.ExtensionContext, command: string) {
+async function runClawCommand(context: vscode.ExtensionContext, command: string) {
     try {
-        if (command === 'openclaw status') {
+        if (command === 'claw status') {
             // Update status to connecting for status command
             statusBarItem.text = '$(sync~spin) Connecting...';
             statusBarItem.tooltip = 'Connection in progress';
@@ -80,14 +82,14 @@ async function runOpenClawCommand(context: vscode.ExtensionContext, command: str
             const iconPath = vscode.Uri.joinPath(context.extensionUri, 'assets', 'images', 'logo.svg');
             if (isWindows) {
                 terminal = vscode.window.createTerminal({
-                    name: 'OpenClaw',
+                    name: 'Claw',
                     shellPath: 'wsl.exe',
                     shellArgs: ['-d', 'Ubuntu'],
                     iconPath: iconPath
                 });
             } else {
                 terminal = vscode.window.createTerminal({
-                    name: 'OpenClaw',
+                    name: 'Claw',
                     iconPath: iconPath
                 });
             }
@@ -99,13 +101,14 @@ async function runOpenClawCommand(context: vscode.ExtensionContext, command: str
 
         if (command === 'openclaw status') {
             // Update status to connected after sending status command
-            statusBarItem.text = '$(check) OpenClaw';
-            statusBarItem.tooltip = 'Connected to OpenClaw';
-            vscode.window.showInformationMessage('OpenClaw Status Command Sent');
+            statusBarItem.text = '$(check) Claw';
+            statusBarItem.tooltip = 'Connected to Claw';
+            vscode.window.showInformationMessage('Claw Status Command Sent');
         }
     } catch (error) {
-        statusBarItem.text = '$(hubot) OpenClaw';
-        statusBarItem.tooltip = 'Click to show OpenClaw menu';
+        // statusBarItem.text = '$(plug) Claw';
+        statusBarItem.text = '$(hubot) Claw';
+        statusBarItem.tooltip = 'Click to show Claw menu';
         vscode.window.showErrorMessage(`Failed to execute ${command}: ${error}`);
     }
 }

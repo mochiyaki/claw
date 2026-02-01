@@ -1,15 +1,15 @@
-# OpenClaw Extension
+# Claw Extension
 
-A simple VS Code extension that manages OpenClaw connection status via a status bar item.
+A simple VS Code extension that manages Claw connection status via a status bar item.
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Features
 
 - **Status Bar Item**: Shows connection status with three states:
-  - `$(hubot) OpenClaw` - Not connected (click to connect)
+  - `$(hubot) Claw` - Not connected (click to connect)
   - `$(sync~spin) Connecting...` - Connection in progress
-  - `$(check) OpenClaw` - Connected to OpenClaw
+  - `$(check) Claw` - Connected to OpenClaw
 
 - **Menu Selection Scheme**: Re-structured to provide command menu with options:
   - Status
@@ -19,8 +19,8 @@ A simple VS Code extension that manages OpenClaw connection status via a status 
   - Dashboard
 
 - **OS Detection**: Automatically detects the operating system and uses:
-  - `openclaw status` on Windows (wsl)
-  - `openclaw status` on other platforms
+  - `claw status` on Windows (wsl)
+  - `claw status` on other platforms
 
 - **Auto-Connect**: Optional setting to automatically connect on startup (disabled by default)
 
@@ -31,18 +31,18 @@ A simple VS Code extension that manages OpenClaw connection status via a status 
 
 1. Click the OpenClaw status bar item (bottom right) to show the menu
 2. Select one of the options from the menu (Status, Onboard, Gateway, Terminal, Dashboard)
-3. The extension will open a terminal and execute the corresponding `openclaw` command
-4. To enable auto-connect, go to Settings and enable `OpenClaw: Auto Connect`
+3. The extension will open a terminal and execute the corresponding `claw` command
+4. To enable auto-connect, go to Settings and enable `Claw: Auto Connect`
 
 ## Configuration
 
-- `openclaw.autoConnect`: Boolean value to automatically connect to OpenClaw on startup (default: false)
+- `claw.autoConnect`: Boolean value to automatically connect to Claw on startup (default: false)
 
 ## Structure Diagram
 
 ```mermaid
 graph TD
-    A[VS Code] --> B[OpenClaw Extension]
+    A[VS Code] --> B[Claw Extension]
     B --> C[Status Bar Item]
     C --> D{Menu Selection}
     D --> E[Status Command]
@@ -82,7 +82,7 @@ graph TD
 
 ## Commands
 
-- `OpenClaw: Show Menu` - Show the OpenClaw menu with command options
+- `Claw: Show Menu` - Show the OpenClaw menu with command options
 
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo5.gif)
