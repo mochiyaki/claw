@@ -56,6 +56,8 @@ graph TD
     I --> J[openclaw CLI]
 ```
 
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo2.gif)
+
 ## Workflow
 
 1. **Initialization**: Extension activates and creates status bar item
@@ -64,6 +66,8 @@ graph TD
 4. **Terminal Management**: Extension creates or reuses terminal based on OS
 5. **Command Execution**: Selected command is sent to terminal
 6. **Status Update**: Status bar item updates based on connection state
+
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo3.gif)
 
 ## Development
 
