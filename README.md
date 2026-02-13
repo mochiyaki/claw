@@ -1,5 +1,7 @@
 # Claw Extension
 
+![magnet](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magnet.gif)
+
 A simple extension that manages Claw connection status via a status bar item.
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
