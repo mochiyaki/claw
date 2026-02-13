@@ -3,6 +3,7 @@ import * as os from 'os';
 
 let statusBarItem: vscode.StatusBarItem;
 let terminal: vscode.Terminal | undefined;
+let ggcTerminal: vscode.Terminal | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('Claw extension is now active');
@@ -69,6 +70,9 @@ export function activate(context: vscode.ExtensionContext) {
             statusBarItem.text = '$(magnet) Claw';
             statusBarItem.tooltip = 'Click to show Claw menu';
         }
+        if (ggcTerminal && closedTerminal === ggcTerminal) {
+            ggcTerminal = undefined;
+        }
     });
 }
 
@@ -84,9 +88,23 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
         const platform = os.platform();
         const isWindows = platform === 'win32';
 
+        if (command === 'ggc oc') {
+            if (!ggcTerminal) {
+                const iconPath = vscode.Uri.joinPath(context.extensionUri, 'assets', 'images', 'icon.svg');
+                ggcTerminal = vscode.window.createTerminal({
+                    name: 'Magnet',
+                    iconPath: iconPath
+                });
+            }
+            ggcTerminal.show(true);
+            ggcTerminal.sendText(command);
+            return;
+        }
+
         // "ggc oc" should run directly on Windows, not through WSL
-        const isGgcOcCommand = command === 'ggc oc';
-        const useWsl = isWindows && !isGgcOcCommand;
+        // const isGgcOcCommand = command === 'ggc oc';
+        // const useWsl = isWindows && !isGgcOcCommand;
+        const useWsl = isWindows;
 
         // Create or reuse terminal
         if (!terminal) {
@@ -100,7 +118,7 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
                 });
             } else {
                 terminal = vscode.window.createTerminal({
-                    name: 'Magnet',
+                    name: 'Open',
                     iconPath: iconPath
                 });
             }
@@ -127,5 +145,8 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
 export function deactivate() {
     if (terminal) {
         terminal.dispose();
+    }
+    if (ggcTerminal) {
+        ggcTerminal.dispose();
     }
 }

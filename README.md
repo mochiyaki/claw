@@ -1,4 +1,4 @@
-# Claw Extension
+# claw
 
 ![magnet](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magnet.gif)
 
@@ -8,7 +8,7 @@ A simple extension that manages Claw connection status via a status bar item.
 
 ## Prerequisites
 
-- Visual Studio Code version 1.74.0 or higher
+- Visual Studio Code version 1.74.0 or higher (if you are using vscode fork, check it under Help > About)
 - [openclaw](https://www.npmjs.com/package/openclaw) installed; if not, install it via npm:
 
 ```bash
@@ -24,7 +24,7 @@ pip install gguf-connector
 ## Features
 
 - **Status Bar Item**: Shows connection status with three states:
-  - `$(hubot) Claw` - Not connected (click to connect)
+  - `$(magnet) Claw` - Not connected (click to connect)
   - `$(sync~spin) Connecting...` - Connection in progress
   - `$(check) Claw` - Connected to OpenClaw
 
