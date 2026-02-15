@@ -1,10 +1,10 @@
-# claw
+# magnet 🧲⚡
+
+A simple extension that manages Claw connection via a status bar magnet.
+
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magmag.gif)
 
 ![magnet](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magnet.gif)
-
-A simple extension that manages Claw connection status via a status bar item.
-
-![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Prerequisites
 
@@ -20,6 +20,8 @@ npm install -g openclaw
 ```bash
 pip install gguf-connector
 ```
+
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Features
 

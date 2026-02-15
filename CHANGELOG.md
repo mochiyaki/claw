@@ -3,6 +3,10 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.1.5
+  - new demo showing the magnet on status bar
+- 0.1.4
+  - please update gguf-connector for macos support; docs revised
 - 0.1.3
   - new terminal session for ggc oc
 - 0.1.2
