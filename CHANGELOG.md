@@ -3,6 +3,12 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.1.9
+  - attempt to use gif
+- 0.1.8
+  - doc and logic updated
+- 0.1.7
+  - openclaw package checker
 - 0.1.6
   - guess the keyword is not necessary
 - 0.1.5

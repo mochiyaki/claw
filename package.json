@@ -2,7 +2,7 @@
   "name": "claw",
   "displayName": "claw",
   "description": "claw connector",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "publisher": "gguf",
   "author": {
     "name": "gguf"
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/mochiyaki/claw.git"
   },
-  "icon": "assets/images/magnet.png",
+  "icon": "assets/images/magnet.gif",
   "engines": {
     "vscode": "^1.74.0"
   },

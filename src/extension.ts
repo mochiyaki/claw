@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
+import * as cp from 'child_process';
+import * as util from 'util';
+
+const exec = util.promisify(cp.exec);
 
 let statusBarItem: vscode.StatusBarItem;
 let terminal: vscode.Terminal | undefined;
@@ -11,21 +15,21 @@ export function activate(context: vscode.ExtensionContext) {
     // Create status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = 'claw.showMenu';
-    // statusBarItem.text = '$(plug) Claw';
-    // statusBarItem.text = '$(hubot) Claw';
+    // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
     statusBarItem.text = '$(magnet) Claw';
     statusBarItem.tooltip = 'Click to show Claw menu';
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
 
     // Register menu command
-    let menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
+    const menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
             "Connect to Claw? Make sure your openclaw is ready.",
             // "Status",
             "Dashboard",
-            "Gateway",
+            "Checker",
             "Onboard",
+            "Gateway",
             "Terminal"
         );
 
@@ -35,7 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
                 'Dashboard': 'openclaw dashboard',
                 'Gateway': 'openclaw gateway',
                 'Onboard': 'openclaw onboard',
-                'Terminal': 'ggc oc'
+                'Terminal': 'ggc oc',
+                'Checker': 'check-package'
                 // 'Status': 'claw status',
                 // 'Onboard': 'claw onboard',
                 // 'Gateway': 'claw gateway',
@@ -43,7 +48,9 @@ export function activate(context: vscode.ExtensionContext) {
                 // 'Dashboard': 'claw dashboard'
             };
             const command = commandMap[selection];
-            if (command) {
+            if (command === 'check-package') {
+                await checkPackage(context);
+            } else if (command) {
                 await runClawCommand(context, command);
             }
         }
@@ -66,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidCloseTerminal((closedTerminal) => {
         if (terminal && closedTerminal === terminal) {
             terminal = undefined;
-            // statusBarItem.text = '$(plug) Claw';
+            // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
             statusBarItem.text = '$(magnet) Claw';
             statusBarItem.tooltip = 'Click to show Claw menu';
         }
@@ -135,11 +142,90 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
         //     vscode.window.showInformationMessage('Claw Status Command Sent');
         // }
     } catch (error) {
-        // statusBarItem.text = '$(plug) Claw';
-        statusBarItem.text = '$(hubot) Claw';
+        // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
+        statusBarItem.text = '$(magnet) Claw';
         statusBarItem.tooltip = 'Click to show Claw menu';
         vscode.window.showErrorMessage(`Failed to execute ${command}: ${error}`);
     }
+}
+
+async function checkPackage(context: vscode.ExtensionContext) {
+    const isWindows = os.platform() === 'win32';
+    // const npmListCmd = isWindows ? 'wsl -d Ubuntu npm list -g openclaw --json --depth=0' : 'npm list -g openclaw --json --depth=0';
+    // const npmViewCmd = isWindows ? 'wsl -d Ubuntu npm view openclaw version' : 'npm view openclaw version';
+
+    // Use --json to reliably parse output, even if there are stderr warnings
+    const npmListCmd = isWindows ? 'wsl -d Ubuntu npm list -g openclaw --json --depth=0' : 'npm list -g openclaw --json --depth=0';
+    const npmViewCmd = isWindows ? 'wsl -d Ubuntu npm view openclaw version' : 'npm view openclaw version';
+
+    vscode.window.withProgress({
+        location: vscode.ProgressLocation.Notification,
+        title: "Checking openclaw package...",
+        cancellable: false
+    }, async (progress) => {
+        try {
+            // Check installed version
+            let installedVersion: string | null = null;
+            try {
+                const { stdout } = await exec(npmListCmd);
+                const result = JSON.parse(stdout);
+                if (result.dependencies && result.dependencies.openclaw) {
+                    installedVersion = result.dependencies.openclaw.version;
+                }
+            } catch (e) {
+                // If package is not installed, npm list might fail or return empty dependencies
+            }
+
+            if (!installedVersion) {
+                const selection = await vscode.window.showWarningMessage(
+                    'Openclaw is not installed.',
+                    'Install Openclaw'
+                );
+                if (selection === 'Install Openclaw') {
+                    await runClawCommand(context, 'npm install -g openclaw');
+                }
+                return;
+            }
+
+            // Check latest version
+            let latestVersion = '';
+            try {
+                const { stdout } = await exec(npmViewCmd);
+                latestVersion = stdout.trim();
+            } catch (e) {
+                vscode.window.showErrorMessage('Failed to check latest version from npm.');
+                return;
+            }
+
+            if (latestVersion && isOlder(installedVersion, latestVersion)) {
+                const selection = await vscode.window.showInformationMessage(
+                    `Openclaw update available (Current: ${installedVersion}, Latest: ${latestVersion})`,
+                    'Update Openclaw'
+                );
+                if (selection === 'Update Openclaw') {
+                    await runClawCommand(context, 'npm update -g openclaw');
+                }
+            } else {
+                vscode.window.showInformationMessage(`Openclaw is up to date (v${installedVersion}).`);
+            }
+
+        } catch (err) {
+            vscode.window.showErrorMessage(`Error checking openclaw package: ${err}`);
+        }
+    });
+}
+
+function isOlder(current: string, latest: string): boolean {
+    const v1 = current.split('.').map(Number);
+    const v2 = latest.split('.').map(Number);
+    // Compare major, minor, patch
+    for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
+        const a = v1[i] || 0;
+        const b = v2[i] || 0;
+        if (a < b) return true;
+        if (a > b) return false;
+    }
+    return false;
 }
 
 export function deactivate() {
