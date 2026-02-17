@@ -4,8 +4,6 @@ A simple extension that manages Claw connection via a status bar magnet.
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magmag.gif)
 
-![magnet](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magnet.gif)
-
 ## Prerequisites
 
 - Visual Studio Code version 1.74.0 or higher (if you are using vscode fork, check it under Help > About)
@@ -21,7 +19,9 @@ npm install -g openclaw
 pip install gguf-connector
 ```
 
-![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
+*if you don't use the Terminal button then gguf-connector is optional
+
+![magnet](https://raw.githubusercontent.com/mochiyaki/pigbot/master/magnet.gif)
 
 ## Features
 
@@ -32,10 +32,10 @@ pip install gguf-connector
 
 - **Menu Selection Scheme**: Re-structured to provide command menu with options:
   - Dashboard
-  - Gateway
+  - Checker (checks openclaw package status; this will help you install/upgrade it)
   - Onboard
-  - Terminal
-  - Checker (checks openclaw package status)
+  - Gateway
+  - Terminal (gguf-connector needed)
 
 - **OS Detection**: Automatically detects operating system:
   - Uses WSL terminal on Windows
@@ -45,6 +45,8 @@ pip install gguf-connector
 
 - **Terminal Management**: Creates or reuses terminal based on OS detection
 - **Command Execution**: Supports multiple commands (status, onboard, gateway, tui, dashboard)
+
+![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Usage
 

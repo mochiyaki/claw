@@ -1,8 +1,8 @@
 {
   "name": "claw",
   "displayName": "claw",
-  "description": "claw connector",
-  "version": "0.1.9",
+  "description": "magnet connector",
+  "version": "0.2.0",
   "publisher": "gguf",
   "author": {
     "name": "gguf"

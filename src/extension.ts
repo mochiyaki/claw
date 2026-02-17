@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
     // Create status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = 'claw.showMenu';
-    // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
     statusBarItem.text = '$(magnet) Claw';
     statusBarItem.tooltip = 'Click to show Claw menu';
     statusBarItem.show();
@@ -24,8 +23,8 @@ export function activate(context: vscode.ExtensionContext) {
     // Register menu command
     const menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
-            "Connect to Claw? Make sure your openclaw is ready.",
-            // "Status",
+            "Make sure openclaw is ready (click Checker if not sure)",
+            // "Status", // move it auto-connect option
             "Dashboard",
             "Checker",
             "Onboard",
@@ -41,11 +40,6 @@ export function activate(context: vscode.ExtensionContext) {
                 'Onboard': 'openclaw onboard',
                 'Terminal': 'ggc oc',
                 'Checker': 'check-package'
-                // 'Status': 'claw status',
-                // 'Onboard': 'claw onboard',
-                // 'Gateway': 'claw gateway',
-                // 'Terminal': 'claw tui',
-                // 'Dashboard': 'claw dashboard'
             };
             const command = commandMap[selection];
             if (command === 'check-package') {
@@ -64,7 +58,6 @@ export function activate(context: vscode.ExtensionContext) {
     if (autoConnect) {
         // Auto-connect on startup (runs status)
         setTimeout(() => {
-            // runClawCommand(context, 'claw status');
             runClawCommand(context, 'openclaw status');
         }, 1000); // Small delay to ensure everything is initialized
     }
@@ -73,7 +66,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidCloseTerminal((closedTerminal) => {
         if (terminal && closedTerminal === terminal) {
             terminal = undefined;
-            // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
             statusBarItem.text = '$(magnet) Claw';
             statusBarItem.tooltip = 'Click to show Claw menu';
         }
@@ -109,8 +101,6 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
         }
 
         // "ggc oc" should run directly on Windows, not through WSL
-        // const isGgcOcCommand = command === 'ggc oc';
-        // const useWsl = isWindows && !isGgcOcCommand;
         const useWsl = isWindows;
 
         // Create or reuse terminal
@@ -142,7 +132,6 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
         //     vscode.window.showInformationMessage('Claw Status Command Sent');
         // }
     } catch (error) {
-        // statusBarItem.text = '$(plug) Claw'; // '$(hubot) Claw';
         statusBarItem.text = '$(magnet) Claw';
         statusBarItem.tooltip = 'Click to show Claw menu';
         vscode.window.showErrorMessage(`Failed to execute ${command}: ${error}`);
