@@ -25,32 +25,27 @@ pip install gguf-connector
 
 ## Features
 
-- **Status Bar Item**: Shows connection status with three states:
-  - `$(magnet) Claw` - Not connected (click to connect)
-  - `$(sync~spin) Connecting...` - Connection in progress
-  - `$(check) Claw` - Connected to OpenClaw
-
 - **Menu Selection Scheme**: Re-structured to provide command menu with options:
   - Dashboard
-  - Checker (checks openclaw package status; this will help you install/upgrade it)
+  - Checker (checks openclaw package status; this will help and walk you through: install/upgrade it to the latest version)
   - Onboard
   - Gateway
   - Terminal (gguf-connector needed)
 
 - **OS Detection**: Automatically detects operating system:
-  - Uses WSL terminal on Windows
+  - Uses WSL terminal on Windows (please study [wsl](https://learn.microsoft.com/en-us/windows/wsl/install) first if you don't have it as openclaw doesn't work well in powershell and git bash recently)
   - Uses native terminal on other platforms
 
 - **Auto-Connect**: Optional setting to automatically connect on startup (disabled by default)
 
 - **Terminal Management**: Creates or reuses terminal based on OS detection
-- **Command Execution**: Supports multiple commands (status, onboard, gateway, tui, dashboard)
+- **Command Execution**: Supports multiple commands (status, onboard, gateway, tui, dashboard, etc.)
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Usage
 
-1. Click the Claw status bar item (bottom right) to show the menu
+1. Click the 🧲Claw status bar item (bottom right) to show the menu
 2. Select one of the options from the menu (Dashboard, Checker, Onboard, Gateway, Terminal)
 3. The extension will open a terminal and execute the corresponding `claw` command
 4. To enable auto-connect, go to Settings and enable `Claw: Auto Connect`

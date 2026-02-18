@@ -3,6 +3,10 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.2.2
+  - clear and update doc
+- 0.2.1
+  - wsl instruction/note added
 - 0.2.0
   - clean up unused code and update doc
 - 0.1.9

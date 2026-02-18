@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (selection) {
             const commandMap: { [key: string]: string } = {
-                // 'Status': 'openclaw status',
+                // 'Status': 'openclaw status', // describe above
                 'Dashboard': 'openclaw dashboard',
                 'Gateway': 'openclaw gateway',
                 'Onboard': 'openclaw onboard',
@@ -77,12 +77,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 async function runClawCommand(context: vscode.ExtensionContext, command: string) {
     try {
-        // if (command === 'claw status') {
-        //     // Update status to connecting for status command
-        //     statusBarItem.text = '$(sync~spin) Connecting...';
-        //     statusBarItem.tooltip = 'Connection in progress';
-        // }
-
         // Detect OS
         const platform = os.platform();
         const isWindows = platform === 'win32';
@@ -125,12 +119,6 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
         terminal.show(true); // true = preserve focus
         terminal.sendText(command);
 
-        // if (command === 'openclaw status') {
-        //     // Update status to connected after sending status command
-        //     statusBarItem.text = '$(check) Claw';
-        //     statusBarItem.tooltip = 'Connected to Claw';
-        //     vscode.window.showInformationMessage('Claw Status Command Sent');
-        // }
     } catch (error) {
         statusBarItem.text = '$(magnet) Claw';
         statusBarItem.tooltip = 'Click to show Claw menu';
@@ -140,8 +128,6 @@ async function runClawCommand(context: vscode.ExtensionContext, command: string)
 
 async function checkPackage(context: vscode.ExtensionContext) {
     const isWindows = os.platform() === 'win32';
-    // const npmListCmd = isWindows ? 'wsl -d Ubuntu npm list -g openclaw --json --depth=0' : 'npm list -g openclaw --json --depth=0';
-    // const npmViewCmd = isWindows ? 'wsl -d Ubuntu npm view openclaw version' : 'npm view openclaw version';
 
     // Use --json to reliably parse output, even if there are stderr warnings
     const npmListCmd = isWindows ? 'wsl -d Ubuntu npm list -g openclaw --json --depth=0' : 'npm list -g openclaw --json --depth=0';
