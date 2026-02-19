@@ -12,7 +12,7 @@ let ggcTerminal: vscode.Terminal | undefined;
 export function activate(context: vscode.ExtensionContext) {
     console.log('Claw extension is now active');
 
-    // Create status bar item
+    // Create status bar magnet
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = 'claw.showMenu';
     statusBarItem.text = '$(magnet) Claw';
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     const menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
             "Make sure openclaw is ready (click Checker if not sure)",
-            // "Status", // move it auto-connect option
+            // "Status", // move it to auto-connect option
             "Dashboard",
             "Checker",
             "Onboard",
@@ -34,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (selection) {
             const commandMap: { [key: string]: string } = {
-                // 'Status': 'openclaw status', // describe above
+                // 'Status': 'openclaw status', // describe as above
                 'Dashboard': 'openclaw dashboard',
                 'Gateway': 'openclaw gateway',
                 'Onboard': 'openclaw onboard',

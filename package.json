@@ -1,8 +1,8 @@
 {
-  "name": "claw",
-  "displayName": "claw",
-  "description": "claw connector (nightly)",
-  "version": "0.2.2",
+  "name": "openclaw",
+  "displayName": "openclaw",
+  "description": "magnet connector",
+  "version": "0.2.3",
   "publisher": "gguf",
   "author": {
     "name": "gguf"

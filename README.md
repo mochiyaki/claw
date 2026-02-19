@@ -77,12 +77,14 @@ graph TD
 
 ## Workflow
 
-1. **Initialization**: Extension activates and creates status bar item
-2. **User Interaction**: User clicks status bar item to open menu
-3. **Command Selection**: User selects from Status, Onboard, Gateway, Terminal, or Dashboard
-4. **Terminal Management**: Extension creates or reuses terminal based on OS
-5. **Command Execution**: Selected command is sent to terminal
-6. **Status Update**: Status bar item updates based on connection state
+```
+openclaw (standard procedure)
+├──Initialization: Extension activates and creates status bar item
+├──User Interaction: User clicks status bar item to open menu
+├──Command Selection: Dashboard, Checker, Onboard, Gateway, or Terminal
+├──Terminal Management: Extension creates or reuses terminal based on OS
+└──Command Execution: Selected command is sent to terminal
+```
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo3.gif)
 *make a flappy bird game on the air
@@ -98,7 +100,7 @@ graph TD
 
 ## Commands
 
-- `Claw: Show Menu` - Show the OpenClaw menu with command options
+- `Claw: Show Menu` - Show the Claw menu with command options
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/demo5.gif)
 *code a tic tac toe game (allows two players or playing against an AI)
