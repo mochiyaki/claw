@@ -23,25 +23,63 @@ export function activate(context: vscode.ExtensionContext) {
     // Register menu command
     const menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
-            "Make sure openclaw is ready (click Check if not sure)",
+            "Make sure openclaw is ready (click Checker if not sure)",
             // "Status", // move it to auto-connect option
             "Dashboard",
-            "Check",
-            "Onboard",
-            "Stop",
+            "Checker",
+            "Setup",
             "Gateway",
             "Terminal"
         );
 
         if (selection) {
+            if (selection === 'Gateway') {
+                const gatewaySelection = await vscode.window.showInformationMessage(
+                    "Select Gateway Command",
+                    "Run",
+                    "Status",
+                    "Start",
+                    "Stop",
+                    "Restart"
+                );
+
+                if (gatewaySelection) {
+                    const gatewayCommandMap: { [key: string]: string } = {
+                        'Run': 'openclaw gateway run',
+                        'Status': 'openclaw gateway status',
+                        'Start': 'openclaw gateway start',
+                        'Stop': 'openclaw gateway stop',
+                        'Restart': 'openclaw gateway restart'
+                    };
+                    const command = gatewayCommandMap[gatewaySelection];
+                    if (command) {
+                        await runClawCommand(context, command);
+                    }
+                }
+                return;
+            }
+
+            if (selection === 'Setup') {
+                const setupSelection = await vscode.window.showInformationMessage(
+                    "Setup Options",
+                    "Onboard",
+                    "Pair"
+                );
+
+                if (setupSelection === 'Onboard') {
+                    await runClawCommand(context, 'openclaw onboard');
+                } else if (setupSelection === 'Pair') {
+                    showPairingMenu(context);
+                }
+                return;
+            }
+
             const commandMap: { [key: string]: string } = {
                 // 'Status': 'openclaw status', // describe as above
+                // 'Gateway': 'openclaw gateway', // re-structure - pop up menu
                 'Dashboard': 'openclaw dashboard',
-                'Gateway': 'openclaw gateway',
-                'Stop': 'openclaw gateway stop',
-                'Onboard': 'openclaw onboard',
                 'Terminal': 'ggc oc',
-                'Check': 'check-package'
+                'Checker': 'check-package'
             };
             const command = commandMap[selection];
             if (command === 'check-package') {
@@ -234,6 +272,96 @@ function isOlder(current: string, latest: string): boolean {
     }
 
     return false;
+}
+
+function showPairingMenu(context: vscode.ExtensionContext) {
+    const panel = vscode.window.createWebviewPanel(
+        'pairingMenu',
+        'Pair Device',
+        vscode.ViewColumn.Active,
+        { enableScripts: true }
+    );
+
+    panel.webview.html = getPairingWebviewContent();
+
+    panel.webview.onDidReceiveMessage(
+        message => {
+            if (message.command === 'submit') {
+                runClawCommand(context, `openclaw pairing approve ${message.app} ${message.code}`);
+                panel.dispose();
+            }
+        },
+        undefined,
+        context.subscriptions
+    );
+}
+
+function getPairingWebviewContent() {
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pair Device</title>
+    <style>
+        body { padding: 20px; font-family: var(--vscode-font-family); color: var(--vscode-editor-foreground); background-color: var(--vscode-editor-background); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 8px; box-sizing: border-box; background: var(--vscode-input-background); color: var(--vscode-input-foreground); border: 1px solid var(--vscode-input-border); outline: none; border-radius: 4px; }
+        select:focus, input:focus { border-color: var(--vscode-focusBorder); }
+        button { padding: 8px 16px; background-color: var(--vscode-button-background); color: var(--vscode-button-foreground); border: none; cursor: pointer; border-radius: 4px; }
+        button:hover:not(:disabled) { background-color: var(--vscode-button-hoverBackground); }
+        button:disabled { background-color: var(--vscode-button-secondaryBackground); opacity: 0.6; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div class="form-group">
+        <label for="app">App Selection</label>
+        <select id="app">
+            <option value="">-- Select App --</option>
+            <option value="telegram">telegram</option>
+            <option value="whatsapp">whatsapp</option>
+            <option value="signal">signal</option>
+            <option value="discord">discord</option>
+            <option value="slack">slack</option>
+            <option value="feishu">feishu</option>
+            <option value="line">line</option>
+            <option value="imessage">imessage</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="code">Pairing Code</label>
+        <input type="text" id="code" placeholder="Enter pairing code">
+    </div>
+    <button id="submit" disabled>Submit</button>
+
+    <script>
+        const vscode = acquireVsCodeApi();
+        const appSelect = document.getElementById('app');
+        const codeInput = document.getElementById('code');
+        const submitBtn = document.getElementById('submit');
+
+        function checkForm() {
+            if (appSelect.value && codeInput.value.trim()) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        appSelect.addEventListener('change', checkForm);
+        codeInput.addEventListener('input', checkForm);
+
+        submitBtn.addEventListener('click', () => {
+            vscode.postMessage({
+                command: 'submit',
+                app: appSelect.value,
+                code: codeInput.value.trim()
+            });
+        });
+    </script>
+</body>
+</html>`;
 }
 
 export function deactivate() {

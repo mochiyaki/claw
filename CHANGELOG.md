@@ -3,8 +3,12 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.2.8
+  - new setup button/schema with onboard and pairing device/apps
+- 0.2.7
+  - new pop up menu with more options for gateway
 - 0.2.6
-  - re-name checker to check
+  - re-name checker to check (revoked in 0.2.7)
 - 0.2.5
   - stop gateway button
 - 0.2.4

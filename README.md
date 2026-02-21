@@ -28,9 +28,16 @@ pip install gguf-connector
 - **Menu Selection Scheme**: Re-structured to provide command menu with options:
   - Dashboard
   - Checker (checks openclaw package status; this will help and walk you through: install/upgrade it to the latest version)
-  - Onboard
-  - Stop Gateway
+  - Setup
+    - Onboard
+    - Pair
+      - no headache and simplify the pairing process
   - Gateway
+    - Run
+    - Status
+    - Start
+    - Stop
+    - Restart
   - Terminal (gguf-connector needed)
 
 - **OS Detection**: Automatically detects operating system:
@@ -47,7 +54,7 @@ pip install gguf-connector
 ## Usage
 
 1. Click the 🧲Claw status bar item (bottom right) to show the menu
-2. Select one of the options from the menu (Dashboard, Check, Onboard, Stop, Gateway, Terminal)
+2. Select one of the options from the menu (Dashboard, Checker, Onboard, Gateway, Terminal)
 3. The extension will open a terminal and execute the corresponding `claw` command
 4. To enable auto-connect, go to Settings and enable `Claw: Auto Connect`
 
@@ -82,7 +89,7 @@ graph TD
 openclaw (standard procedure)
 ├──Initialization: Extension activates and creates status bar item
 ├──User Interaction: User clicks status bar item to open menu
-├──Command Selection: Dashboard, Check, Onboard, Stop, Gateway, or Terminal
+├──Command Selection: Dashboard, Checker, Onboard, Gateway, or Terminal
 ├──Terminal Management: Extension creates or reuses terminal based on OS
 └──Command Execution: Selected command is sent to terminal
 ```

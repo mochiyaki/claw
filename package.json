@@ -2,7 +2,7 @@
   "name": "openclaw",
   "displayName": "openclaw",
   "description": "magnet connector",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "publisher": "gguf",
   "author": {
     "name": "gguf"
