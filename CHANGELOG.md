@@ -3,6 +3,12 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.2.6
+  - re-name checker to check
+- 0.2.5
+  - stop gateway button
+- 0.2.4
+  - handle pre-release version logic for checker
 - 0.2.3
   - minor adjustment
 - 0.2.2

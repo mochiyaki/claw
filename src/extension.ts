@@ -23,11 +23,12 @@ export function activate(context: vscode.ExtensionContext) {
     // Register menu command
     const menuCommand = vscode.commands.registerCommand('claw.showMenu', async () => {
         const selection = await vscode.window.showInformationMessage(
-            "Make sure openclaw is ready (click Checker if not sure)",
+            "Make sure openclaw is ready (click Check if not sure)",
             // "Status", // move it to auto-connect option
             "Dashboard",
-            "Checker",
+            "Check",
             "Onboard",
+            "Stop",
             "Gateway",
             "Terminal"
         );
@@ -37,9 +38,10 @@ export function activate(context: vscode.ExtensionContext) {
                 // 'Status': 'openclaw status', // describe as above
                 'Dashboard': 'openclaw dashboard',
                 'Gateway': 'openclaw gateway',
+                'Stop': 'openclaw gateway stop',
                 'Onboard': 'openclaw onboard',
                 'Terminal': 'ggc oc',
-                'Checker': 'check-package'
+                'Check': 'check-package'
             };
             const command = commandMap[selection];
             if (command === 'check-package') {
@@ -191,15 +193,46 @@ async function checkPackage(context: vscode.ExtensionContext) {
 }
 
 function isOlder(current: string, latest: string): boolean {
-    const v1 = current.split('.').map(Number);
-    const v2 = latest.split('.').map(Number);
-    // Compare major, minor, patch
-    for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
-        const a = v1[i] || 0;
-        const b = v2[i] || 0;
-        if (a < b) return true;
-        if (a > b) return false;
+    const parse = (v: string) => {
+        v = v.replace(/^v/, '');
+        const hyphenIndex = v.indexOf('-');
+        let coreStr = v;
+        let pre = '';
+        if (hyphenIndex !== -1) {
+            coreStr = v.substring(0, hyphenIndex);
+            pre = v.substring(hyphenIndex + 1);
+        }
+        const core = coreStr.split('.').map(n => parseInt(n, 10));
+        return { core, pre };
+    };
+
+    const v1 = parse(current);
+    const v2 = parse(latest);
+
+    // Compare core segments
+    for (let i = 0; i < Math.max(v1.core.length, v2.core.length); i++) {
+        const a = v1.core[i];
+        const b = v2.core[i];
+
+        const numA = isNaN(a) ? 0 : a;
+        const numB = isNaN(b) ? 0 : b;
+
+        if (numA < numB) return true;
+        if (numA > numB) return false;
     }
+
+    // Core versions are equal.
+    // If current has pre-release and latest doesn't, current is older (e.g. 1.0.0-beta < 1.0.0)
+    if (v1.pre && !v2.pre) return true;
+
+    // If current is release and latest is pre-release, current is usually newer/stable.
+    if (!v1.pre && v2.pre) return false;
+
+    // Both have pre-release tags
+    if (v1.pre && v2.pre) {
+        return v1.pre < v2.pre;
+    }
+
     return false;
 }
 
