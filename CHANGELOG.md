@@ -3,6 +3,8 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.2.9
+  - pair up plus doc update
 - 0.2.8
   - new setup button/schema with onboard and pairing device/apps
 - 0.2.7

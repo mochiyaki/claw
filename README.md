@@ -30,7 +30,7 @@ pip install gguf-connector
   - Checker (checks openclaw package status; this will help and walk you through: install/upgrade it to the latest version)
   - Setup
     - Onboard
-    - Pair
+    - Pair up
       - no headache and simplify the pairing process
   - Gateway
     - Run
@@ -47,14 +47,14 @@ pip install gguf-connector
 - **Auto-Connect**: Optional setting to automatically connect on startup (disabled by default)
 
 - **Terminal Management**: Creates or reuses terminal based on OS detection
-- **Command Execution**: Supports multiple commands (status, onboard, gateway, tui, dashboard, etc.)
+- **Command Execution**: Supports multiple commands (dashboard, onboard, gateway, etc.)
 
 ![screenshot](https://raw.githubusercontent.com/mochiyaki/pigbot/master/openclaw.gif)
 
 ## Usage
 
 1. Click the 🧲Claw status bar item (bottom right) to show the menu
-2. Select one of the options from the menu (Dashboard, Checker, Onboard, Gateway, Terminal)
+2. Select one of the options from the menu (Dashboard, Checker, Setup, Gateway, Terminal)
 3. The extension will open a terminal and execute the corresponding `claw` command
 4. To enable auto-connect, go to Settings and enable `Claw: Auto Connect`
 
