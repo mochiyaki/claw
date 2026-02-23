@@ -63,11 +63,14 @@ export function activate(context: vscode.ExtensionContext) {
                 const setupSelection = await vscode.window.showInformationMessage(
                     "Setup Options",
                     "Onboard",
-                    "Pair up"
+                    "Pair up",
+                    "Console"
                 );
 
                 if (setupSelection === 'Onboard') {
                     await runClawCommand(context, 'openclaw onboard');
+                } else if (setupSelection === 'Console') {
+                    await runClawCommand(context, 'openclaw tui');
                 } else if (setupSelection === 'Pair up') {
                     showPairingMenu(context);
                 }

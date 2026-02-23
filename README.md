@@ -32,6 +32,7 @@ pip install gguf-connector
     - Onboard
     - Pair up
       - no headache and simplify the pairing process
+    - Console
   - Gateway
     - Run
     - Status

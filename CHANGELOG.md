@@ -3,6 +3,8 @@
 All notable changes to the "claw" and/or "openclaw" extension will be documented in this file.
 
 ## Releases
+- 0.3.0
+  - add console button under setup for linux/ubuntu inference
 - 0.2.9
   - pair up plus doc update
 - 0.2.8
