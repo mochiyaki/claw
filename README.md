@@ -42,7 +42,7 @@ pip install gguf-connector
   - Terminal (gguf-connector needed)
 
 - **OS Detection**: Automatically detects operating system:
-  - Uses WSL terminal on Windows (please study [wsl](https://learn.microsoft.com/en-us/windows/wsl/install) first if you don't have it as openclaw doesn't work well in powershell and git bash recently)
+  - Uses WSL terminal on Windows (please study [wsl](https://learn.microsoft.com/en-us/windows/wsl/install) first if you don't have it as openclaw doesn't work well in powershell and git bash recently; you might need to add Path to Environment Variables... i.e., `\\wsl.localhost\Ubuntu\home\<UserName>\.npm-global\bin`)
   - Uses native terminal on other platforms
 
 - **Auto-Connect**: Optional setting to automatically connect on startup (disabled by default)
@@ -90,7 +90,7 @@ graph TD
 openclaw (standard procedure)
 ├──Initialization: Extension activates and creates status bar item
 ├──User Interaction: User clicks status bar item to open menu
-├──Command Selection: Dashboard, Checker, Onboard, Gateway, or Terminal
+├──Command Selection: Dashboard, Checker, Setup, Gateway, or Terminal
 ├──Terminal Management: Extension creates or reuses terminal based on OS
 └──Command Execution: Selected command is sent to terminal
 ```
